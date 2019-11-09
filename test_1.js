@@ -29,6 +29,9 @@ async function sleep(ms = 0) {
     await page.waitFor(5000)
     await sleep(5000)
     console.log(await page.evaluate('(new Date()).toLocaleString()'))
+    await page.waitFor(5000)
+    await sleep(5000)
+    console.log(await page.evaluate('(new Date()).toLocaleString()'))
 
     await browser.close();
 })();
