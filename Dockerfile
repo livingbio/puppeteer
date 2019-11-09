@@ -11,4 +11,3 @@ WORKDIR /home
 ADD . /home
 
 RUN yarn install
-RUN node test_1.js
