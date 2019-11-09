@@ -34,6 +34,8 @@ const puppeteer = require('./index.js');
     var total_time = record_time;
 
     for (var i = 0; i < total_time / step; i++) {
+        console.log(await page.evaluate('(new Date()).toLocaleString()'))
+
         await page.waitFor(step);
         await page.screenshot({ path: './tmp/' + i + '.jpg' });
     }
