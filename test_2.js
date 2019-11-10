@@ -1,4 +1,7 @@
 const puppeteer = require('./index.js');
+async function sleep(ms = 0) {
+    return new Promise(r => setTimeout(r, ms));
+}
 
 (async () => {
     const browser = await puppeteer.launch({
@@ -8,9 +11,9 @@ const puppeteer = require('./index.js');
             '--disable-setuid-sandbox',
             '--enable-surface-synchronization',
             '--run-all-compositor-stages-before-draw',
-            '--disable-threaded-animation',
-            '--disable-threaded-scrolling',
-            '--disable-checker-imaging',
+            // '--disable-threaded-animation',
+            // '--disable-threaded-scrolling',
+            // '--disable-checker-imaging',
         ],
         deterministic: {
             date: new Date('Jan 01, 2000')
@@ -21,7 +24,7 @@ const puppeteer = require('./index.js');
     console.log("chrome version is " + await browser.version() + " at: " + puppeteer.executablePath());
     const page = await browser.newPage();
     var url = process.argv[2] || 'https://giant.gfycat.com/YoungOblongEmperorshrimp.webm';
-    var record_time = process.argv[3] || 30000;
+    var record_time = process.argv[3] || 10000;
     var fps = process.argv[4] || 25;
     var step = 1000 / fps;
 
@@ -36,6 +39,7 @@ const puppeteer = require('./index.js');
     for (var i = 0; i < total_time / step; i++) {
         console.log(await page.evaluate('(new Date()).toLocaleString()'))
 
+        await sleep(1000)
         await page.waitFor(step);
         await page.screenshot({ path: './tmp/' + i + '.jpg' });
     }
