@@ -1,12 +1,15 @@
-test:
-	TEST_NAME = test-`date +'%y.%m.%d %H:%M:%S'`
-	git checkout -b $TEST_NAME
-	rm mount/*
+TEST_NAME=test-$(shell date +'%Y-%m-%d-%H-%M-%S')
+TEST_FOLDER:=$(shell pwd)/out/$(TEST_NAME)
+
+validate:
+	echo $(TEST_NAME)
+	git checkout -b $(TEST_NAME)
+	mkdir -p $(TEST_FOLDER)
 	docker build -t virtualtime .
-	docker run -it --entrypoint bash -v $(pwd)/mount:/home/tmp virtualtime node test_2.js
-	docker run -it -v $(pwd)/mount:/home/tmp virtualtime node test_2.js
-	ffmpeg -i mount/%d.jpg $TEST_NAME.mp4
+	docker run -it -v $(TEST_FOLDER):/home/tmp virtualtime node test_2.js > out/$(TEST_NAME).log
+	ffmpeg -i $(TEST_FOLDER)/%d.jpg out/$(TEST_NAME).mp4
 	git add -u
-	git add $TEST_NAME.mp4
-	git commit -m "$TEST_NAME"
-	git push -u origin $TEST_NAME
+	git add out/$(TEST_NAME).mp4
+	git add out/$(TEST_NAME).log
+	git commit -m "$(TEST_NAME)"
+	git push -u origin $(TEST_NAME)
