@@ -3,8 +3,10 @@
 
 set -ev
 
-mkdir -p ./tmp
-mkdir -p ./out
+cd /home
 
-node test_1.js > out/1.log
-node test_2.js > out/2.log
+mkdir -p /workspace/tmp
+mkdir -p /workspace/out
+
+node test_1.js > /workspace/out/1.log
+node test_2.js > /workspace/out/2.log

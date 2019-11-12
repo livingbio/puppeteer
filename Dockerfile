@@ -10,4 +10,4 @@ RUN apt-get update && apt-get install -yq libgconf-2-4 wget \
 WORKDIR /home
 ADD . /home
 
-RUN sudo npm -g install
+RUN yarn install
