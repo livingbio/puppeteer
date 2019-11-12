@@ -1,0 +1,15 @@
+{% include 'stage/_base.yaml.j2' %}
+
+compile:
+- export SETUPTOOLS_SCM_PRETEND_VERSION={{TAG}} && python3 setup.py bdist_wheel && mv dist/*.whl ./
+
+build:
+- g8 stage builder # --cache
+
+test:
+- g8 stage runner {{IMAGE}}:{{TAG}} ./scripts/test.sh
+- ffmpeg -i ./tmp/%d.jpg out/2.mp4
+- gsutil -m cp out/* gs://livingbio-tmp/{{COMMIT}}/
+- g8 stage check --context=TEST-1-LOG --description="https://storage.googleapis.com/livingbio-tmp/{{COMMIT}}/1.log"
+- g8 stage check --context=TEST-2-LOG --description="https://storage.googleapis.com/livingbio-tmp/{{COMMIT}}/2.log"
+- g8 stage check --context=TEST-2-MP4 --description="https://storage.googleapis.com/livingbio-tmp/{{COMMIT}}/2.mp4"
