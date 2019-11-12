@@ -1,8 +1,5 @@
 {% include 'stage/_base.yaml.j2' %}
 
-compile:
-- export SETUPTOOLS_SCM_PRETEND_VERSION={{TAG}} && python3 setup.py bdist_wheel && mv dist/*.whl ./
-
 build:
 - g8 stage builder # --cache
 
