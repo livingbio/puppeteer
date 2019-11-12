@@ -2,3 +2,4 @@ Dockerfile*
 Makefile
 mount/*
 out/*
+log/*
