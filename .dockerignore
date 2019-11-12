@@ -1,0 +1,4 @@
+Dockerfile*
+Makefile
+mount/*
+out/*
