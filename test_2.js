@@ -39,7 +39,7 @@ async function sleep(ms = 0) {
     for (var i = 0; i < total_time / step; i++) {
         console.log(await page.evaluate('(new Date()).toLocaleString()'))
 
-        await sleep(1000)
+        await sleep(100)
         await page.waitFor(step);
         await page.screenshot({ path: './tmp/' + i + '.jpg' });
     }
